@@ -16,7 +16,9 @@ class InternetProvider implements DataProvider {
 
     private static final String TAG = InternetProvider.class.getSimpleName();
 
-    private String mUrl = API_URL;
+//    private String mUrl = API_URL;
+
+    private String mUrl = "https://raw.githubusercontent.com/Ecnill/Android-Post-Viewer/master/app/src/test/tmpurlfiles/example.url.com%26pagesize%3D5%26page%3D1";
 
     private int mUrlCounter = 1;
     private DataDownloadTask mDownloadTask;

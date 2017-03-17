@@ -79,7 +79,7 @@ class PostListPresenterImpl implements PostListPresenter<Post> {
     }
 
     @Override
-    public void itemClick(int pos, boolean isPortraitView) {
+    public void itemClick(int pos) {
         Bundle bundle = new Bundle();
         bundle.putString("html", mPostsList.get(pos).getHtmlDetail());
         bundle.putString("title", mPostsList.get(pos).getTitle());

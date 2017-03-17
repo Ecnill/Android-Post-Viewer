@@ -119,7 +119,7 @@ public class PostListFragment extends Fragment implements PostListView,
 
     @Override
     public void onItemClick(int pos) {
-        mPresenter.itemClick(pos, getResources().getBoolean(R.bool.two_pane_mode));
+        mPresenter.itemClick(pos);
     }
 
     @Override

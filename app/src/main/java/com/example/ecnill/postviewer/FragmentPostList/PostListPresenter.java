@@ -10,7 +10,7 @@ interface PostListPresenter<T> {
 
     void loadMore();
 
-    void itemClick(int pos, boolean isPortraitView);
+    void itemClick(int pos);
 
     List<T> getAllData();
 
