@@ -1,9 +1,7 @@
 <resources>
 
     <string name="app_name">PostViewer</string>
-
     <string name="load_message">Loading…</string>
-
     <string name="all_data_loaded_message">All posts are loaded!</string>
 
 </resources>
