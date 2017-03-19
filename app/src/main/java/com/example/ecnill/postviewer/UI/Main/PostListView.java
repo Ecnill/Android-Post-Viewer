@@ -1,4 +1,4 @@
-package com.example.ecnill.postviewer.FragmentPostList;
+package com.example.ecnill.postviewer.UI.Main;
 
 import android.support.v4.app.Fragment;
 
@@ -6,7 +6,7 @@ import android.support.v4.app.Fragment;
  * Created by ecnill on 14.3.17.
  */
 
-interface PostListView {
+public interface PostListView {
 
     void showProgress();
 

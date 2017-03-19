@@ -1,4 +1,4 @@
-package com.example.ecnill.postviewer.FragmentDetail;
+package com.example.ecnill.postviewer.UI.Detail;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -12,7 +12,7 @@ import android.webkit.WebView;
 import android.widget.TextView;
 
 import com.example.ecnill.postviewer.R;
-import com.example.ecnill.postviewer.Utils.CustomWebViewClient;
+import com.example.ecnill.postviewer.Network.CustomWebViewClient;
 
 /**
  * Created by ecnill on 14.3.17.
@@ -27,6 +27,15 @@ public class DetailFragment extends Fragment {
 
     public DetailFragment() {
         Log.i(TAG, "constructor.");
+    }
+
+    public static DetailFragment newInstance(String title, String htmlCode) {
+        DetailFragment detailFragment = new DetailFragment();
+        Bundle args = new Bundle();
+        args.putString("title", title);
+        args.putString("html", htmlCode);
+        detailFragment.setArguments(args);
+        return detailFragment;
     }
 
     @Override

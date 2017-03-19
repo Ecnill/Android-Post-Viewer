@@ -1,4 +1,4 @@
-package com.example.ecnill.postviewer.Utils;
+package com.example.ecnill.postviewer.Network;
 
 import android.util.Log;
 

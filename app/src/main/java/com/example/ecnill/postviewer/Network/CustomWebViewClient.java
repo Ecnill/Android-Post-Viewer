@@ -1,11 +1,10 @@
-package com.example.ecnill.postviewer.Utils;
+package com.example.ecnill.postviewer.Network;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
-import android.util.Log;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;

@@ -1,11 +1,10 @@
-package com.example.ecnill.postviewer.UtilsData;
+package com.example.ecnill.postviewer.Network;
 
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.example.ecnill.postviewer.Entities.Owner;
-import com.example.ecnill.postviewer.Entities.Post;
-import com.example.ecnill.postviewer.Utils.HttpHandler;
+import com.example.ecnill.postviewer.Data.Entities.Owner;
+import com.example.ecnill.postviewer.Data.Entities.Post;
 
 import org.json.JSONArray;
 import org.json.JSONException;

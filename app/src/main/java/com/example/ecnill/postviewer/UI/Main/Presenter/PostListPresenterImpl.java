@@ -1,12 +1,15 @@
-package com.example.ecnill.postviewer.FragmentPostList;
+package com.example.ecnill.postviewer.UI.Main.Presenter;
 
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 
-import com.example.ecnill.postviewer.Entities.Post;
-import com.example.ecnill.postviewer.FragmentDetail.DetailFragment;
+import com.example.ecnill.postviewer.Data.Entities.Post;
+import com.example.ecnill.postviewer.Data.DataProvider;
 import com.example.ecnill.postviewer.R;
+import com.example.ecnill.postviewer.UI.Detail.DetailFragment;
+import com.example.ecnill.postviewer.UI.Main.PostListView;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +18,7 @@ import java.util.List;
  * Created by ecnill on 14.3.17.
  */
 
-class PostListPresenterImpl implements PostListPresenter<Post> {
+public class PostListPresenterImpl implements PostListPresenter<Post> {
 
     private static final String TAG = PostListPresenterImpl.class.getSimpleName();
 
@@ -28,7 +31,7 @@ class PostListPresenterImpl implements PostListPresenter<Post> {
 
     private boolean mShouldShowEndListMess = true;
 
-    PostListPresenterImpl(PostListView postPostListView, DataProvider dataProvider) {
+    public PostListPresenterImpl(PostListView postPostListView, DataProvider dataProvider) {
         this.mPostListView = postPostListView;
         this.mDataProvider = dataProvider;
         initData();
@@ -80,11 +83,10 @@ class PostListPresenterImpl implements PostListPresenter<Post> {
 
     @Override
     public void itemClick(int pos) {
-        Bundle bundle = new Bundle();
-        bundle.putString("html", mPostsList.get(pos).getHtmlDetail());
-        bundle.putString("title", mPostsList.get(pos).getTitle());
-        Fragment fr = new DetailFragment();
-        fr.setArguments(bundle);
+        Fragment fr = DetailFragment.newInstance(
+                mPostsList.get(pos).getTitle(),
+                mPostsList.get(pos).getHtmlDetail()
+        );
         mPostListView.showNextFragment(fr);
     }
 

@@ -1,4 +1,4 @@
-package com.example.ecnill.postviewer;
+package com.example.ecnill.postviewer.UI;
 
 import android.content.Context;
 import android.content.pm.ActivityInfo;
@@ -9,8 +9,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.example.ecnill.postviewer.FragmentPostList.PostListFragment;
-import com.example.ecnill.postviewer.Utils.FragmentChangeListener;
+import com.example.ecnill.postviewer.R;
+import com.example.ecnill.postviewer.UI.Main.PostListFragment;
+
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class MainActivity extends AppCompatActivity implements FragmentChangeListener {

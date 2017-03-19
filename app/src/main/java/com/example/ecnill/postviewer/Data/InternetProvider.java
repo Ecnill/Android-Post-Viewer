@@ -1,18 +1,16 @@
-package com.example.ecnill.postviewer.FragmentPostList;
+package com.example.ecnill.postviewer.Data;
 
-import com.example.ecnill.postviewer.Entities.Post;
+import com.example.ecnill.postviewer.Data.Entities.Post;
 import com.example.ecnill.postviewer.Utils.Utils;
-import com.example.ecnill.postviewer.UtilsData.DataDownloadTask;
+import com.example.ecnill.postviewer.Network.DataDownloadTask;
 
 import java.util.List;
-
-import static com.example.ecnill.postviewer.BuildConfig.API_URL;
 
 /**
  * Created by ecnill on 14.3.17.
  */
 
-class InternetProvider implements DataProvider {
+public class InternetProvider implements DataProvider {
 
     private static final String TAG = InternetProvider.class.getSimpleName();
 

@@ -1,4 +1,4 @@
-package com.example.ecnill.postviewer.Adapters;
+package com.example.ecnill.postviewer.UI.Main.Adapter;
 
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -8,10 +8,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.ecnill.postviewer.Entities.Post;
+import com.example.ecnill.postviewer.Data.Entities.Post;
 import com.example.ecnill.postviewer.R;
+import com.squareup.okhttp.Interceptor;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Response;
+import com.squareup.picasso.OkHttpDownloader;
 import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
 import java.util.List;
 
 /**

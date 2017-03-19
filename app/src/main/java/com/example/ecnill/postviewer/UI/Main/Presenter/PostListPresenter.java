@@ -1,4 +1,4 @@
-package com.example.ecnill.postviewer.FragmentPostList;
+package com.example.ecnill.postviewer.UI.Main.Presenter;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import java.util.List;
  * Created by ecnill on 14.3.17.
  */
 
-interface PostListPresenter<T> {
+public interface PostListPresenter<T> {
 
     void loadMore();
 

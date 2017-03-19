@@ -1,6 +1,6 @@
-package com.example.ecnill.postviewer.FragmentPostList;
+package com.example.ecnill.postviewer.Data;
 
-import com.example.ecnill.postviewer.Entities.Post;
+import com.example.ecnill.postviewer.Data.Entities.Post;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import java.util.List;
  * Created by ecnill on 14.3.17.
  */
 
-interface DataProvider {
+public interface DataProvider {
 
     List<Post> downloadNextItems();
 

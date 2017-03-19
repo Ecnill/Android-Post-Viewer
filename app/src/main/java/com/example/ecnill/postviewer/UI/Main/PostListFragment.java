@@ -1,4 +1,4 @@
-package com.example.ecnill.postviewer.FragmentPostList;
+package com.example.ecnill.postviewer.UI.Main;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -11,10 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.ecnill.postviewer.Adapters.PostAdapter;
-import com.example.ecnill.postviewer.Entities.Post;
+import com.example.ecnill.postviewer.Data.InternetProvider;
+import com.example.ecnill.postviewer.UI.Main.Adapter.PostAdapter;
+import com.example.ecnill.postviewer.Data.Entities.Post;
 import com.example.ecnill.postviewer.R;
-import com.example.ecnill.postviewer.Utils.FragmentChangeListener;
+import com.example.ecnill.postviewer.UI.Main.Presenter.PostListPresenter;
+import com.example.ecnill.postviewer.UI.Main.Presenter.PostListPresenterImpl;
+import com.example.ecnill.postviewer.UI.FragmentChangeListener;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
 import static com.kaopiz.kprogresshud.KProgressHUD.create;
@@ -51,18 +54,22 @@ public class PostListFragment extends Fragment implements PostListView,
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_posts, container, false);
-        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_posts);
-        return rootView;
+        return inflater.inflate(R.layout.fragment_posts, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_posts);
+        if (mProgressHUD == null) {
+            createProgressIdentifier(getActivity());
+        }
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         Activity activity = getActivity();
-        if (mProgressHUD == null) {
-            createProgressIdentifier(activity);
-        }
+
         final LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
         mRecyclerView.setLayoutManager(layoutManager);
         mAdapter = new PostAdapter(mPresenter.getAllData(), this);

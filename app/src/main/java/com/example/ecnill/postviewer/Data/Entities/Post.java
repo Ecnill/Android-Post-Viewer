@@ -1,4 +1,4 @@
-package com.example.ecnill.postviewer.Entities;
+package com.example.ecnill.postviewer.Data.Entities;
 
 /**
  * Created by ecnill on 14.3.17.
