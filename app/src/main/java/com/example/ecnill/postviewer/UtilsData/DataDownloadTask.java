@@ -48,38 +48,47 @@ public class DataDownloadTask extends AsyncTask<Void, Void, Void> {
                     for (int i = 0; i < jsonArray.length(); ++i) {
                         JSONObject o = jsonArray.getJSONObject(i);
 
-                        Owner owner = new Owner();
-
                         JSONObject owObj = o.getJSONObject("owner");
-                        if (owObj.has("user_id")) {
-                            owner.setId(owObj.getLong("user_id"));
-                        }
-                        if (owObj.has("display_name")) {
-                            owner.setName(owObj.getString("display_name"));
-                        }
-                        if (owObj.has("profile_image")) {
-                            owner.setProfileImageUrl(owObj.getString("profile_image"));
-                        }
-                        if (owObj.has("reputation")) {
-                            owner.setReputation(owObj.getInt("reputation"));
+                        if (owObj.has("user_id") && owObj.has("display_name") && owObj.has("profile_image")) {
+
+                            long ownerId = owObj.getLong("user_id");
+                            String ownerUrl = owObj.getString("profile_image");
+                            String ownerName = owObj.getString("display_name");
+                            int ownerRep = 0;
+
+                            if (owObj.has("reputation")) {
+                                ownerRep = owObj.getInt("reputation");
+                            }
+
+                            if (o.has("question_id") && o.has("title")) {
+                                long postId = o.getLong("question_id");
+                                String postTitle = o.getString("title");
+                                String postHtml = "";
+                                int postViewCount = 0;
+
+                                if (o.has("view_count")) {
+                                    postViewCount = o.getInt("view_count");
+                                }
+                                if (o.has("body")) {
+                                    postHtml = o.getString("body");
+                                }
+
+                                Post post = new Post.PostBuilder(
+                                        postId,
+                                        postTitle,
+                                        new Owner.OwnerBuilder(
+                                                ownerId,
+                                                ownerName,
+                                                ownerUrl)
+                                                .setReputation(ownerRep)
+                                                .build())
+                                        .setHtmlDetail(postHtml)
+                                        .setViewCount(postViewCount)
+                                        .build();
+                                result.add(post);
+                            }
                         }
 
-                        Post post = new Post();
-                        if (o.has("question_id")) {
-                            post.setId(o.getLong("question_id"));
-                        }
-                        if (o.has("view_count")) {
-                            post.setViewCount(o.getInt("view_count"));
-                        }
-                        if (o.has("title")) {
-                            post.setTitle(o.getString("title"));
-                        }
-                        if (o.has("body")) {
-                            post.setHtmlDetail(o.getString("body"));
-                        }
-                        post.setOwner(owner);
-
-                        result.add(post);
                     }
                 } else {
                     noMoreItems = true;

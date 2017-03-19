@@ -4,39 +4,35 @@ package com.example.ecnill.postviewer.Entities;
  * Created by ecnill on 14.3.17.
  */
 
-public class Owner {
+public final class Owner {
 
-    private long id;
-    private int reputation;
-    private String name;
-    private String profileImageUrl;
+    private final long id;
+    private final int reputation;
+    private final String name;
+    private final String profileImageUrl;
+
+    private Owner(OwnerBuilder builder) {
+        this.id = builder.id;
+        this.name = builder.name;
+        this.reputation = builder.reputation;
+        this.profileImageUrl = builder.profileImageUrl;
+    }
 
     public long getId() {
         return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getProfileImageUrl() {
         return profileImageUrl;
     }
 
-    public void setProfileImageUrl(String profileImageUrl) {
-        this.profileImageUrl = profileImageUrl;
-    }
-
-    public void setReputation(int reputation) {
-        this.reputation = reputation;
+    @Override
+    public String toString() {
+        return this.id + " " + this.reputation + " " + this.name + " " + this.profileImageUrl;
     }
 
     @Override
@@ -75,5 +71,28 @@ public class Owner {
         return result;
     }
 
+
+    public static class OwnerBuilder {
+
+        private long id;
+        private String name;
+        private String profileImageUrl;
+        private int reputation = 0;
+
+        public OwnerBuilder(long id, String name, String profileImageUrl) {
+            this.id = id;
+            this.name = name;
+            this.profileImageUrl = profileImageUrl;
+        }
+
+        public OwnerBuilder setReputation(int reputation) {
+            this.reputation = reputation;
+            return this;
+        }
+
+        public Owner build() {
+            return new Owner(this);
+        }
+    }
 
 }
