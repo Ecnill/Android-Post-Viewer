@@ -13,6 +13,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.Getter;
+
 /**
  * Created by ecnill on 14.3.17.
  */
@@ -22,7 +24,7 @@ public final class DataDownloadTask extends AsyncTask<Void, Void, Void> {
     private static final String TAG = DataDownloadTask.class.getSimpleName();
 
     private boolean done = false;
-    private boolean noMoreItems = false;
+    @Getter private boolean noMoreItems = false;
 
     private final String mUrl;
 
@@ -83,7 +85,6 @@ public final class DataDownloadTask extends AsyncTask<Void, Void, Void> {
                                         .setHtmlDetail(postHtml)
                                         .setViewCount(postViewCount)
                                         .build();
-
                                 mResult.add(post);
                             }
                         }
@@ -116,10 +117,6 @@ public final class DataDownloadTask extends AsyncTask<Void, Void, Void> {
             }
         }
         return mResult;
-    }
-
-    public boolean noMoreData() {
-        return noMoreItems;
     }
 
 }

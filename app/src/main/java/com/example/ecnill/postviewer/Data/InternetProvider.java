@@ -1,8 +1,8 @@
 package com.example.ecnill.postviewer.Data;
 
 import com.example.ecnill.postviewer.Data.Entities.Post;
-import com.example.ecnill.postviewer.Utils.StringUtils;
 import com.example.ecnill.postviewer.Network.DataDownloadTask;
+import com.example.ecnill.postviewer.Utils.StringUtils;
 
 import java.util.List;
 
@@ -34,7 +34,7 @@ public final class InternetProvider implements DataProvider {
 
     @Override
     public boolean areAllItemsDownload() {
-        return mDownloadTask != null && mDownloadTask.noMoreData();
+        return mDownloadTask != null && mDownloadTask.isNoMoreItems();
     }
 
 }

@@ -1,16 +1,22 @@
 package com.example.ecnill.postviewer.Data.Entities;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
+
 /**
  * Created by ecnill on 14.3.17.
  */
 
+@ToString(exclude = {"viewCount", "htmlDetail"})
+@EqualsAndHashCode(exclude={"viewCount", "htmlDetail"})
 public final class Post {
 
-    private final long      id;
-    private final String    title;
-    private final Owner     owner;
-    private final int       viewCount;
-    private final String    htmlDetail;
+    @Getter private final long      id;
+    @Getter private final String    title;
+    @Getter private final Owner     owner;
+    @Getter private final int       viewCount;
+    @Getter private final String    htmlDetail;
 
     private Post (final PostBuilder builder) {
         this.id         = builder.id;
@@ -20,61 +26,6 @@ public final class Post {
         this.viewCount  = builder.viewCount;
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getHtmlDetail() {
-        return htmlDetail;
-    }
-
-    public int getViewCount() {
-        return viewCount;
-    }
-
-    public Owner getOwner() {
-        return owner;
-    }
-
-    @Override
-    public String toString() {
-        return  "Post: "
-                + "id = " + Long.toString(id)
-                + ", title = " + title
-                + ", viewCount = " + Integer.toString(viewCount)
-                + ", ownerNae = " + owner.getName();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        Post other = (Post) obj;
-        return  id == other.id &&
-                title.equals(other.title) &&
-                htmlDetail.equals(other.htmlDetail) &&
-                owner.equals(other.owner);
-    }
-
-    @Override
-    public int hashCode() {
-        final int prime = 71;
-        int result = 1;
-        result = (int) (prime * result + id);
-        result = prime * result + viewCount;
-        return result;
-    }
 
     public final static class PostBuilder {
 

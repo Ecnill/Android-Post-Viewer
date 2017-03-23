@@ -1,15 +1,21 @@
 package com.example.ecnill.postviewer.Data.Entities;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
+
 /**
  * Created by ecnill on 14.3.17.
  */
 
+@ToString(exclude = {"reputation", "profileImageUrl"})
+@EqualsAndHashCode(exclude={"reputation", "profileImageUrl"})
 public final class Owner {
 
-    private final long      id;
-    private final int       reputation;
-    private final String    name;
-    private final String    profileImageUrl;
+    @Getter private final long      id;
+    @Getter private final int       reputation;
+    @Getter private final String    name;
+    @Getter private final String    profileImageUrl;
 
     private Owner(final OwnerBuilder builder) {
         this.id                 = builder.id;
@@ -17,59 +23,7 @@ public final class Owner {
         this.reputation         = builder.reputation;
         this.profileImageUrl    = builder.profileImageUrl;
     }
-
-    public long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getProfileImageUrl() {
-        return profileImageUrl;
-    }
-
-    public int getReputation() {
-        return reputation;
-    }
-
-    @Override
-    public String toString() {
-        return  "Owner: "
-                + "id = " + Long.toString(id)
-                + ", name = " + name
-                + ", reputation = " + Integer.toString(reputation)
-                + ", profileImageUrl = " + profileImageUrl;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        Owner other = (Owner) obj;
-        return id == other.id
-                && reputation == other.reputation
-                && name.equals(other.name)
-                && profileImageUrl.equals(other.profileImageUrl);
-    }
-
-    @Override
-    public int hashCode() {
-        final int prime = 53;
-        int result = 1;
-        result = (int) (prime * result + id);
-        result = prime * result + reputation;
-        return result;
-    }
-
+    
 
     public final static class OwnerBuilder {
 
