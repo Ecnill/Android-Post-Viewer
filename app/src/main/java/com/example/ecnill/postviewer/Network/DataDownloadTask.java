@@ -17,18 +17,17 @@ import java.util.List;
  * Created by ecnill on 14.3.17.
  */
 
-public class DataDownloadTask extends AsyncTask<Void, Void, Void> {
+public final class DataDownloadTask extends AsyncTask<Void, Void, Void> {
 
     private static final String TAG = DataDownloadTask.class.getSimpleName();
 
     private boolean done = false;
     private boolean noMoreItems = false;
 
-    private String mUrl;
+    private final String mUrl;
 
-    private List<Post> result = new ArrayList<>();
-
-    private final Object lock = new Object();
+    private final Object mLock = new Object();
+    private List<Post> mResult = new ArrayList<>();
 
     public DataDownloadTask (String url) {
         mUrl = url;
@@ -84,10 +83,10 @@ public class DataDownloadTask extends AsyncTask<Void, Void, Void> {
                                         .setHtmlDetail(postHtml)
                                         .setViewCount(postViewCount)
                                         .build();
-                                result.add(post);
+
+                                mResult.add(post);
                             }
                         }
-
                     }
                 } else {
                     noMoreItems = true;
@@ -96,8 +95,8 @@ public class DataDownloadTask extends AsyncTask<Void, Void, Void> {
                 Log.e(TAG, "Json parsing error: " + e.getMessage());
             } finally {
                 done = true;
-                synchronized (lock) {
-                    lock.notifyAll();
+                synchronized (mLock) {
+                    mLock.notifyAll();
                 }
             }
         } else {
@@ -106,20 +105,17 @@ public class DataDownloadTask extends AsyncTask<Void, Void, Void> {
         return null;
     }
 
-    @Override
-    protected void onPostExecute(Void result) { }
-
-    public List<Post> getResult()  {
-        synchronized (lock) {
+    public List<Post> getDownloadedItems()  {
+        synchronized (mLock) {
             if (!done) {
                 try {
-                    lock.wait();
+                    mLock.wait();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
         }
-        return result;
+        return mResult;
     }
 
     public boolean noMoreData() {

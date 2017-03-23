@@ -5,12 +5,14 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.ecnill.postviewer.App;
+import com.example.ecnill.postviewer.Data.LocalProvider;
+import com.example.ecnill.postviewer.Data.PostsDatabaseHelper;
 import com.example.ecnill.postviewer.Data.InternetProvider;
 import com.example.ecnill.postviewer.UI.Main.Adapter.PostAdapter;
 import com.example.ecnill.postviewer.Data.Entities.Post;
@@ -18,38 +20,38 @@ import com.example.ecnill.postviewer.R;
 import com.example.ecnill.postviewer.UI.Main.Presenter.PostListPresenter;
 import com.example.ecnill.postviewer.UI.Main.Presenter.PostListPresenterImpl;
 import com.example.ecnill.postviewer.UI.FragmentChangeListener;
+import com.example.ecnill.postviewer.Utils.ProgressHudUtils;
 import com.kaopiz.kprogresshud.KProgressHUD;
-
-import static com.kaopiz.kprogresshud.KProgressHUD.create;
 
 /**
  * Created by ecnill on 14.3.17.
  */
 
-public class PostListFragment extends Fragment implements PostListView,
+public final class PostListFragment extends Fragment implements PostListView,
         PostAdapter.OnPostClickListener {
 
     private static final String TAG = PostListFragment.class.getSimpleName();
 
-    private PostListPresenter<Post> mPresenter;
+    private boolean mInitView = true;
 
     private RecyclerView mRecyclerView;
     private PostAdapter mAdapter;
     private KProgressHUD mProgressHUD;
 
-    private boolean mInitView = true;
-
-    public PostListFragment() {
-        Log.i(TAG, "constructor.");
-    }
+    private PostListPresenter<Post> mPresenter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
-        // if there is internet connection
-        mPresenter = new PostListPresenterImpl(this, new InternetProvider());
-        // todo: else if db
+
+        PostsDatabaseHelper databaseHelper = new PostsDatabaseHelper(getActivity());
+
+        if (((App) getContext().getApplicationContext()).isNetworkAvailable()) {
+            mPresenter = new PostListPresenterImpl(this, new InternetProvider(), databaseHelper);
+        } else  {
+            mPresenter = new PostListPresenterImpl(this, new LocalProvider(databaseHelper), databaseHelper);
+        }
     }
 
     @Override
@@ -61,7 +63,7 @@ public class PostListFragment extends Fragment implements PostListView,
     public void onViewCreated(View view, Bundle savedInstanceState) {
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_posts);
         if (mProgressHUD == null) {
-            createProgressIdentifier(getActivity());
+            mProgressHUD = ProgressHudUtils.createProgressIdentifier(getActivity());
         }
     }
 
@@ -137,15 +139,6 @@ public class PostListFragment extends Fragment implements PostListView,
         } else {
             fc.replaceFragment(R.id.detail_fragment, fragment, true);
         }
-    }
-
-    private void createProgressIdentifier(Activity activity){
-        mProgressHUD = create(activity);
-        mProgressHUD.setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
-                .setLabel(getResources().getString(R.string.load_message))
-                .setCancellable(true)
-                .setAnimationSpeed(2)
-                .setDimAmount(0.5f);
     }
 
 }
