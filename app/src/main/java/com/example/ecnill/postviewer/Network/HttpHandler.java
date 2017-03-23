@@ -16,11 +16,11 @@ import java.net.URL;
  * Created by ecnill on 14.3.17.
  */
 
-public class HttpHandler {
+final class HttpHandler {
 
     private static final String TAG = HttpHandler.class.getSimpleName();
 
-    public String makeServiceCall(String reqUrl) {
+    String makeServiceCall(String reqUrl) {
         String response = null;
         try {
             URL url = new URL(reqUrl);

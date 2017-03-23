@@ -14,7 +14,7 @@ import com.example.ecnill.postviewer.UI.Main.PostListFragment;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class MainActivity extends AppCompatActivity implements FragmentChangeListener {
+public final class MainActivity extends AppCompatActivity implements FragmentChangeListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements FragmentChangeLis
         }
         if (!getResources().getBoolean(R.bool.two_pane_mode)) {
             PostListFragment listFragment = new PostListFragment();
-            replaceFragment(R.id.fragment_container, listFragment, true);
+            replaceFragment(R.id.fragment_container, listFragment, false);
         } else {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         }
@@ -52,6 +52,5 @@ public class MainActivity extends AppCompatActivity implements FragmentChangeLis
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
-
 
 }

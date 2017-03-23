@@ -4,20 +4,20 @@ package com.example.ecnill.postviewer.Data.Entities;
  * Created by ecnill on 14.3.17.
  */
 
-public class Post {
+public final class Post {
 
-    private final long id;
-    private final String title;
-    private final Owner owner;
-    private final int viewCount;
-    private final String htmlDetail;
+    private final long      id;
+    private final String    title;
+    private final Owner     owner;
+    private final int       viewCount;
+    private final String    htmlDetail;
 
-    private Post (PostBuilder builder) {
-        this.id = builder.id;
-        this.title = builder.title;
-        this.owner = builder.owner;
+    private Post (final PostBuilder builder) {
+        this.id         = builder.id;
+        this.title      = builder.title;
+        this.owner      = builder.owner;
         this.htmlDetail = builder.htmlDetail;
-        this.viewCount = builder.viewCount;
+        this.viewCount  = builder.viewCount;
     }
 
     public long getId() {
@@ -32,13 +32,21 @@ public class Post {
         return htmlDetail;
     }
 
+    public int getViewCount() {
+        return viewCount;
+    }
+
     public Owner getOwner() {
         return owner;
     }
 
     @Override
     public String toString() {
-        return this.id + " " + this.title + " " + this.owner.getId() + " " + this.owner.getName();
+        return  "Post: "
+                + "id = " + Long.toString(id)
+                + ", title = " + title
+                + ", viewCount = " + Integer.toString(viewCount)
+                + ", ownerNae = " + owner.getName();
     }
 
     @Override
@@ -53,19 +61,10 @@ public class Post {
             return false;
         }
         Post other = (Post) obj;
-        if (id != other.id) {
-            return false;
-        }
-        if (!title.equals(other.title)) {
-            return false;
-        }
-        if (!htmlDetail.equals(other.htmlDetail)) {
-            return false;
-        }
-        if (!owner.equals(other.owner)) {
-            return false;
-        }
-        return true;
+        return  id == other.id &&
+                title.equals(other.title) &&
+                htmlDetail.equals(other.htmlDetail) &&
+                owner.equals(other.owner);
     }
 
     @Override
@@ -77,7 +76,7 @@ public class Post {
         return result;
     }
 
-    public static class PostBuilder {
+    public final static class PostBuilder {
 
         private long id;
         private String title;
@@ -85,7 +84,7 @@ public class Post {
         private int viewCount = 0;
         private String htmlDetail = "";
 
-        public PostBuilder(long id, String title, Owner owner) {
+        public PostBuilder(final long id, final String title, final Owner owner) {
             this.id = id;
             this.title = title;
             this.owner = owner;

@@ -8,22 +8,20 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.ecnill.postviewer.App;
 import com.example.ecnill.postviewer.Data.Entities.Post;
 import com.example.ecnill.postviewer.R;
-import com.squareup.okhttp.Interceptor;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Response;
-import com.squareup.picasso.OkHttpDownloader;
+import com.example.ecnill.postviewer.Utils.StringUtils;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
-import java.io.IOException;
 import java.util.List;
 
 /**
  * Created by ecnill on 14.3.17.
  */
 
-public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
+public final class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
     public interface OnPostClickListener {
         void onItemClick(int pos);
@@ -31,13 +29,14 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
     private static final String TAG = PostAdapter.class.getSimpleName();
 
-    private int mActualItemPos;
     private final OnPostClickListener mListener;
-    private List<Post> mPostsList;
+    private final List<Post> mPostsList;
 
-    public PostAdapter(List<Post> posts, OnPostClickListener listener) {
-        mPostsList = posts;
-        mListener = listener;
+    private int mActualItemPos;
+
+    public PostAdapter(final List<Post> posts, final OnPostClickListener listener) {
+        this.mPostsList = posts;
+        this.mListener = listener;
     }
 
     @Override
@@ -60,10 +59,17 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             }
         });
 
-        Picasso.with(holder.itemView.getContext())
-                .load(post.getOwner().getProfileImageUrl())
-                .error(ContextCompat.getDrawable(holder.itemView.getContext(), R.mipmap.ic_launcher))
-                .into(holder.imgPostImage);
+        Picasso p = Picasso.with(holder.itemView.getContext());
+        if (((App) holder.itemView.getContext().getApplicationContext()).isNetworkAvailable()) {
+            p.load(post.getOwner().getProfileImageUrl())
+                    .error(ContextCompat.getDrawable(holder.itemView.getContext(), R.mipmap.ic_launcher))
+                    .into(holder.imgPostImage);
+        } else {
+            p.load(post.getOwner().getProfileImageUrl())
+                    .error(ContextCompat.getDrawable(holder.itemView.getContext(), R.mipmap.ic_launcher))
+                    .networkPolicy(NetworkPolicy.OFFLINE)
+                    .into(holder.imgPostImage);
+        }
     }
 
     @Override
@@ -75,11 +81,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         return mActualItemPos;
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    final static class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView txtPostTitle;
-        TextView txtPostUserName;
-        ImageView imgPostImage;
+        final TextView txtPostTitle;
+        final TextView txtPostUserName;
+        final ImageView imgPostImage;
 
         ViewHolder(View itemView) {
             super(itemView);

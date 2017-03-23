@@ -13,13 +13,13 @@ import android.webkit.WebViewClient;
  * Created by ecnill on 14.3.17.
  */
 
-public class CustomWebViewClient extends WebViewClient {
+public final class CustomWebViewClient extends WebViewClient {
 
     private static final String TAG = CustomWebViewClient.class.getSimpleName();
     private boolean shouldShowInExternalBrowser = false;
-    private Activity mActivity;
+    private final Activity mActivity;
 
-    public CustomWebViewClient(Activity activity, boolean shouldShowInExternalBrowser) {
+    public CustomWebViewClient(final Activity activity, final boolean shouldShowInExternalBrowser) {
         this.mActivity = activity;
         this.shouldShowInExternalBrowser = shouldShowInExternalBrowser;
     }
