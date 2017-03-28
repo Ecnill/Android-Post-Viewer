@@ -11,11 +11,14 @@ import android.widget.TextView;
 import com.example.ecnill.postviewer.App;
 import com.example.ecnill.postviewer.Data.Entities.Post;
 import com.example.ecnill.postviewer.R;
-import com.example.ecnill.postviewer.Utils.StringUtils;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import lombok.Getter;
 
 /**
  * Created by ecnill on 14.3.17.
@@ -32,7 +35,7 @@ public final class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHold
     private final OnPostClickListener mListener;
     private final List<Post> mPostsList;
 
-    private int mActualItemPos;
+    @Getter private int itemActualPosition;
 
     public PostAdapter(final List<Post> posts, final OnPostClickListener listener) {
         this.mPostsList = posts;
@@ -47,14 +50,15 @@ public final class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        mActualItemPos = holder.getAdapterPosition();
+        itemActualPosition = holder.getAdapterPosition();
         Post post = mPostsList.get(position);
 
         holder.txtPostTitle.setText(post.getTitle());
         holder.txtPostUserName.setText(post.getOwner().getName());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
+            @Override
+            public void onClick(View v) {
                 mListener.onItemClick(holder.getAdapterPosition());
             }
         });
@@ -77,23 +81,17 @@ public final class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHold
         return mPostsList.size();
     }
 
-    public int getItemActualPos() {
-        return mActualItemPos;
-    }
 
     final static class ViewHolder extends RecyclerView.ViewHolder {
 
-        final TextView txtPostTitle;
-        final TextView txtPostUserName;
-        final ImageView imgPostImage;
+        @BindView(R.id.txt_post_title)      TextView  txtPostTitle;
+        @BindView(R.id.txt_post_user_name)  TextView  txtPostUserName;
+        @BindView(R.id.img_post_image)      ImageView imgPostImage;
 
         ViewHolder(View itemView) {
             super(itemView);
-            txtPostTitle = (TextView) itemView.findViewById(R.id.txt_post_title);
-            txtPostUserName = (TextView) itemView.findViewById(R.id.txt_post_user_name);
-            imgPostImage = (ImageView) itemView.findViewById(R.id.img_post_image);
+            ButterKnife.bind(this, itemView);
         }
-
     }
 
 }

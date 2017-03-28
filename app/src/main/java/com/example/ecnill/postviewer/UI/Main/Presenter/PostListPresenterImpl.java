@@ -46,7 +46,7 @@ public final class PostListPresenterImpl implements PostListPresenter<Post> {
         if (mPostListView != null) {
             Handler handler = new Handler();
             if (!mDataProvider.areAllItemsDownload()) {
-                
+
                 mPostListView.showProgress();
                 List<Post> newPosts =  mDataProvider.downloadNextItems();
                 saveToDb(newPosts);
@@ -72,7 +72,7 @@ public final class PostListPresenterImpl implements PostListPresenter<Post> {
                     }
                 }, ANIMATION_DELAY);
             } else {
-                
+
                 if (mShouldShowEndListMess) {
                     mShouldShowEndListMess = false;
                     handler.postDelayed(new Runnable() {

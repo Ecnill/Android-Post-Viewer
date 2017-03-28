@@ -26,9 +26,7 @@ public final class InternetProvider implements DataProvider {
     public List<Post> downloadNextItems() {
         mDownloadTask = new DataDownloadTask(mUrl);
         mDownloadTask.execute();
-
-        mUrlCounter++;
-        mUrl = StringUtils.replaceLastChar(mUrl, mUrlCounter);
+        mUrl = StringUtils.replaceLastChar(mUrl, ++mUrlCounter);
         return mDownloadTask.getDownloadedItems();
     }
 

@@ -11,17 +11,20 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.ecnill.postviewer.App;
+import com.example.ecnill.postviewer.Data.Entities.Post;
+import com.example.ecnill.postviewer.Data.InternetProvider;
 import com.example.ecnill.postviewer.Data.LocalProvider;
 import com.example.ecnill.postviewer.Data.PostsDatabaseHelper;
-import com.example.ecnill.postviewer.Data.InternetProvider;
-import com.example.ecnill.postviewer.UI.Main.Adapter.PostAdapter;
-import com.example.ecnill.postviewer.Data.Entities.Post;
 import com.example.ecnill.postviewer.R;
+import com.example.ecnill.postviewer.UI.FragmentChangeListener;
+import com.example.ecnill.postviewer.UI.Main.Adapter.PostAdapter;
 import com.example.ecnill.postviewer.UI.Main.Presenter.PostListPresenter;
 import com.example.ecnill.postviewer.UI.Main.Presenter.PostListPresenterImpl;
-import com.example.ecnill.postviewer.UI.FragmentChangeListener;
 import com.example.ecnill.postviewer.Utils.ProgressHudUtils;
 import com.kaopiz.kprogresshud.KProgressHUD;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by ecnill on 14.3.17.
@@ -34,7 +37,7 @@ public final class PostListFragment extends Fragment implements PostListView,
 
     private boolean mInitView = true;
 
-    private RecyclerView mRecyclerView;
+    @BindView(R.id.recycler_view_posts) RecyclerView mRecyclerView;
     private PostAdapter mAdapter;
     private KProgressHUD mProgressHUD;
 
@@ -44,9 +47,7 @@ public final class PostListFragment extends Fragment implements PostListView,
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
-
         PostsDatabaseHelper databaseHelper = new PostsDatabaseHelper(getActivity());
-
         if (((App) getContext().getApplicationContext()).isNetworkAvailable()) {
             mPresenter = new PostListPresenterImpl(this, new InternetProvider(), databaseHelper);
         } else  {
@@ -61,7 +62,7 @@ public final class PostListFragment extends Fragment implements PostListView,
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_posts);
+        ButterKnife.bind(this, view);
         if (mProgressHUD == null) {
             mProgressHUD = ProgressHudUtils.createProgressIdentifier(getActivity());
         }
@@ -78,7 +79,7 @@ public final class PostListFragment extends Fragment implements PostListView,
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-               mRecyclerView.setAdapter(mAdapter);
+                mRecyclerView.setAdapter(mAdapter);
             }
         });
 
@@ -92,7 +93,7 @@ public final class PostListFragment extends Fragment implements PostListView,
                     return;
                 }
                 // if last visible item has same position as number of all items, then load more
-                if ((mAdapter.getItemActualPos() + 1)  == layoutManager.getItemCount()) {
+                if ((mAdapter.getItemActualPosition() + 1)  == layoutManager.getItemCount()) {
                     loadMore();
                 }
             }
