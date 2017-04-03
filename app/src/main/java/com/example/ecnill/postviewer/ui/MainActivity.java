@@ -1,4 +1,4 @@
-package com.example.ecnill.postviewer.UI;
+package com.example.ecnill.postviewer.ui;
 
 import android.content.Context;
 import android.content.pm.ActivityInfo;
@@ -10,7 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.example.ecnill.postviewer.R;
-import com.example.ecnill.postviewer.UI.Main.PostListFragment;
+import com.example.ecnill.postviewer.ui.main.PostListFragment;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 

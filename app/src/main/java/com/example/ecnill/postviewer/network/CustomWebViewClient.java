@@ -1,4 +1,4 @@
-package com.example.ecnill.postviewer.Network;
+package com.example.ecnill.postviewer.network;
 
 import android.annotation.TargetApi;
 import android.app.Activity;

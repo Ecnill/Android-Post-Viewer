@@ -1,4 +1,4 @@
-package com.example.ecnill.postviewer.Data.Entities;
+package com.example.ecnill.postviewer.model;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

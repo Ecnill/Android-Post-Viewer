@@ -1,4 +1,4 @@
-package com.example.ecnill.postviewer.UI;
+package com.example.ecnill.postviewer.ui;
 
 import android.support.v4.app.Fragment;
 

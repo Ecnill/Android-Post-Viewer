@@ -1,4 +1,4 @@
-package com.example.ecnill.postviewer.UI.Main;
+package com.example.ecnill.postviewer.ui.main;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -11,16 +11,13 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.ecnill.postviewer.App;
-import com.example.ecnill.postviewer.Data.Entities.Post;
-import com.example.ecnill.postviewer.Data.InternetProvider;
-import com.example.ecnill.postviewer.Data.LocalProvider;
-import com.example.ecnill.postviewer.Data.PostsDatabaseHelper;
+import com.example.ecnill.postviewer.data.InternetProvider;
+import com.example.ecnill.postviewer.data.LocalProvider;
+import com.example.ecnill.postviewer.data.PostsDatabaseHelper;
+import com.example.ecnill.postviewer.network.NetworkService;
 import com.example.ecnill.postviewer.R;
-import com.example.ecnill.postviewer.UI.FragmentChangeListener;
-import com.example.ecnill.postviewer.UI.Main.Adapter.PostAdapter;
-import com.example.ecnill.postviewer.UI.Main.Presenter.PostListPresenter;
-import com.example.ecnill.postviewer.UI.Main.Presenter.PostListPresenterImpl;
-import com.example.ecnill.postviewer.Utils.ProgressHudUtils;
+import com.example.ecnill.postviewer.ui.FragmentChangeListener;
+import com.example.ecnill.postviewer.utils.ProgressHudUtils;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
 import butterknife.BindView;
@@ -30,7 +27,7 @@ import butterknife.ButterKnife;
  * Created by ecnill on 14.3.17.
  */
 
-public final class PostListFragment extends Fragment implements PostListView,
+public final class PostListFragment extends Fragment implements Question.View,
         PostAdapter.OnPostClickListener {
 
     private static final String TAG = PostListFragment.class.getSimpleName();
@@ -41,7 +38,7 @@ public final class PostListFragment extends Fragment implements PostListView,
     private PostAdapter mAdapter;
     private KProgressHUD mProgressHUD;
 
-    private PostListPresenter<Post> mPresenter;
+    private PostListPresenter mPresenter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,9 +46,10 @@ public final class PostListFragment extends Fragment implements PostListView,
         setRetainInstance(true);
         PostsDatabaseHelper databaseHelper = new PostsDatabaseHelper(getActivity());
         if (((App) getContext().getApplicationContext()).isNetworkAvailable()) {
-            mPresenter = new PostListPresenterImpl(this, new InternetProvider(), databaseHelper);
+            NetworkService networkService = ((App) getContext().getApplicationContext()).getNetworkService();
+            mPresenter = new PostListPresenter(this, new InternetProvider(networkService), databaseHelper);
         } else  {
-            mPresenter = new PostListPresenterImpl(this, new LocalProvider(databaseHelper), databaseHelper);
+            mPresenter = new PostListPresenter(this, new LocalProvider(databaseHelper), databaseHelper);
         }
     }
 
@@ -76,12 +74,7 @@ public final class PostListFragment extends Fragment implements PostListView,
         final LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
         mRecyclerView.setLayoutManager(layoutManager);
         mAdapter = new PostAdapter(mPresenter.getAllData(), this);
-        activity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mRecyclerView.setAdapter(mAdapter);
-            }
-        });
+        activity.runOnUiThread(() -> mRecyclerView.setAdapter(mAdapter));
 
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -111,8 +104,8 @@ public final class PostListFragment extends Fragment implements PostListView,
     }
 
     @Override
-    public void showMessage(int resourceId) {
-        String message = getActivity().getResources().getString(resourceId);
+    public void showFinishLoadMessage() {
+        String message = getActivity().getResources().getString(R.string.all_data_loaded_message);
         Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
     }
 

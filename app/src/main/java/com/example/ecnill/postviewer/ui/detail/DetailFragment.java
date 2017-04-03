@@ -1,4 +1,4 @@
-package com.example.ecnill.postviewer.UI.Detail;
+package com.example.ecnill.postviewer.ui.detail;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -12,7 +12,7 @@ import android.webkit.WebView;
 import android.widget.TextView;
 
 import com.example.ecnill.postviewer.R;
-import com.example.ecnill.postviewer.Network.CustomWebViewClient;
+import com.example.ecnill.postviewer.network.CustomWebViewClient;
 
 /**
  * Created by ecnill on 14.3.17.

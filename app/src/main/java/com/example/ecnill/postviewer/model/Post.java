@@ -1,4 +1,4 @@
-package com.example.ecnill.postviewer.Data.Entities;
+package com.example.ecnill.postviewer.model;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -18,7 +18,7 @@ public final class Post {
     @Getter private final int       viewCount;
     @Getter private final String    htmlDetail;
 
-    private Post (final PostBuilder builder) {
+    private Post(final PostBuilder builder) {
         this.id         = builder.id;
         this.title      = builder.title;
         this.owner      = builder.owner;

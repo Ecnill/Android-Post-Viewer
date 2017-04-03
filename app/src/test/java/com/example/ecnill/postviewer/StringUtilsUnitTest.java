@@ -1,6 +1,6 @@
 package com.example.ecnill.postviewer;
 
-import com.example.ecnill.postviewer.Utils.StringUtils;
+import com.example.ecnill.postviewer.utils.StringUtils;
 
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package com.example.ecnill.postviewer.Utils;
+package com.example.ecnill.postviewer.utils;
 
 import android.app.Activity;
 

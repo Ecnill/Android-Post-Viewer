@@ -1,4 +1,4 @@
-package com.example.ecnill.postviewer.Data;
+package com.example.ecnill.postviewer.data;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,9 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.example.ecnill.postviewer.Data.Entities.Owner;
-import com.example.ecnill.postviewer.Data.Entities.Post;
-import com.example.ecnill.postviewer.Utils.StringUtils;
+import com.example.ecnill.postviewer.model.Owner;
+import com.example.ecnill.postviewer.model.Post;
+import com.example.ecnill.postviewer.utils.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;

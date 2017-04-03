@@ -1,4 +1,4 @@
-package com.example.ecnill.postviewer.UI.Main.Adapter;
+package com.example.ecnill.postviewer.ui.main;
 
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.ecnill.postviewer.App;
-import com.example.ecnill.postviewer.Data.Entities.Post;
+import com.example.ecnill.postviewer.model.Post;
 import com.example.ecnill.postviewer.R;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
@@ -24,9 +24,9 @@ import lombok.Getter;
  * Created by ecnill on 14.3.17.
  */
 
-public final class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
+final class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
-    public interface OnPostClickListener {
+    interface OnPostClickListener {
         void onItemClick(int pos);
     }
 
@@ -37,7 +37,7 @@ public final class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHold
 
     @Getter private int itemActualPosition;
 
-    public PostAdapter(final List<Post> posts, final OnPostClickListener listener) {
+    PostAdapter(final List<Post> posts, final OnPostClickListener listener) {
         this.mPostsList = posts;
         this.mListener = listener;
     }
@@ -56,12 +56,7 @@ public final class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHold
         holder.txtPostTitle.setText(post.getTitle());
         holder.txtPostUserName.setText(post.getOwner().getName());
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mListener.onItemClick(holder.getAdapterPosition());
-            }
-        });
+        holder.itemView.setOnClickListener(v -> mListener.onItemClick(holder.getAdapterPosition()));
 
         Picasso p = Picasso.with(holder.itemView.getContext());
         if (((App) holder.itemView.getContext().getApplicationContext()).isNetworkAvailable()) {
